@@ -1,0 +1,21 @@
+[package]
+name = "network-ex"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "network_ex"
+path = "src/lib.rs"
+
+[[bin]]
+name = "arping"
+path = "src/bin/arping.rs"
+
+[[bin]]
+name = "ping"
+path = "src/bin/ping.rs"
+
+[dependencies]
+anyhow = "1.0"
+default-net = "0.22.0"
+libc = "0.2.172"
