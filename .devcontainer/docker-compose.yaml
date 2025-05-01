@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+  network_rust:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ..:/workspace:cached
+    command: sleep infinity
+    networks:
+      network_rust_subnet:
+        ipv4_address: 192.168.2.100
+    mac_address: 02:42:ac:11:01:00 
+    cap_add:
+      - NET_RAW
+      - NET_ADMIN
+      - CAP_SYS_ADMIN
+    privileged: true
+
+  network_rust_subnet_peer:
+    image: ubuntu:22.04
+    command: sleep infinity
+    networks:
+      network_rust_subnet:
+        ipv4_address: 192.168.2.200
+    mac_address: 02:42:ac:11:02:00
+      
+networks:
+  network_rust_subnet:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.2.0/24
+          gateway: 192.168.2.1
